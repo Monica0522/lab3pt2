@@ -25,15 +25,15 @@ struct stat buf;
 
 int main(int argc, char *argv[]) {
     
-    bool commandline = FALSE; //determine if 0 args passed
+    bool commandline = FALSE; 
     if (argc < 2){commandline=TRUE;
     }
     
     struct passwd *passwd;
     passwd = getpwuid(getuid());
     char *file, *dir;
-    uid_t uid;  //user id
-    gid_t gid;  //group
+    uid_t uid;  
+    gid_t gid;  
     uid = getuid();
     gid = getgid();
     DIR *d;
