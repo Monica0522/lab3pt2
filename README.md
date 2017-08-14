@@ -7,8 +7,6 @@
 //  Copyright © 2017 Monica Andrade. All rights reserved.
 //
 
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -27,13 +25,15 @@ struct stat buf;
 
 int main(int argc, char *argv[]) {
     
-    bool commandline = FALSE; //determine if 0 args passed
-    if (argc < 2){commandline=TRUE;}
+    bool commandline = FALSE; 
+    if (argc < 2){commandline=TRUE;
+    }
+    
     struct passwd *passwd;
     passwd = getpwuid(getuid());
     char *file, *dir;
-    uid_t uid;  //user id
-    gid_t gid;  //group
+    uid_t uid;  
+    gid_t gid;  
     uid = getuid();
     gid = getgid();
     DIR *d;
@@ -66,14 +66,12 @@ int main(int argc, char *argv[]) {
                     }
                 }
             }
-        } /* IF CHILD */
+        }
         commandline=FALSE;
-    } /* FOR LOOP */
+    }
     while (wait(NULL) > 0);
     
-} /* !Main */
-
-/* PRINT FILE PERMISSIONS*/
+}
 void permission() {
     int fileMode;
     
@@ -98,3 +96,4 @@ void permission() {
         printf("\n\n");
     }
 }
+
