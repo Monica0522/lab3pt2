@@ -1,4 +1,3 @@
-# lab3pt2
 //
 //  main.cpp
 //  lab3pt2
@@ -6,6 +5,8 @@
 //  Created by Monica Andrade on 8/7/17.
 //  Copyright © 2017 Monica Andrade. All rights reserved.
 //
+
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,24 +17,26 @@
 #include <string.h>
 #include <dirent.h>
 
+
 void permission();
 typedef int bool;
 #define TRUE  1
 #define FALSE 0
+uid_t uid;  //user id
+gid_t gid;  //group
 
 struct stat buf;
 
 int main(int argc, char *argv[]) {
     
-    bool commandline = FALSE; 
+    bool commandline = FALSE; //determine if 0 args passed
     if (argc < 2){commandline=TRUE;
     }
     
     struct passwd *passwd;
     passwd = getpwuid(getuid());
     char *file, *dir;
-    uid_t uid;  
-    gid_t gid;  
+    
     uid = getuid();
     gid = getgid();
     DIR *d;
@@ -47,11 +50,9 @@ int main(int argc, char *argv[]) {
         if (!(pid = fork())) {
             
             stat(argv[i], &buf);
-        
+            
             if (argc > 1) {
-                dir = passwd->pw_dir;
-                file = malloc(sizeof(dir) + 1 + sizeof(argv[i]));
-                strcat(file, dir);
+                dir = passwd->pw_dir;                strcat(file, dir);
                 strcat(file, "/");
                 strcat(file, argv[i]);
                 printf("File: %s\nDirectory: %s\n", argv[i], file);
@@ -76,7 +77,7 @@ void permission() {
     int fileMode;
     
     fileMode = buf.st_mode;
-    if (fileMode & S_IRUSR) {
+    if (buf.st_uid == uid) {
         printf("You have Owner permissions:");
         if (fileMode & S_IREAD) { printf(" Read "); }
         if (fileMode & S_IWRITE) { printf("Write "); }
